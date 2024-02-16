@@ -3,7 +3,7 @@ package com.example.oasismaritimo.models;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="animals")
+@Table(name="animal")
 public class Animal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
