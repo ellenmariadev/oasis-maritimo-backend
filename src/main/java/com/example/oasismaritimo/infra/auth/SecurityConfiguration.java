@@ -32,8 +32,16 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/register").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/v1/animals").hasRole("BIOLOGIST")
-                        .anyRequest().permitAll()
+
+                        .requestMatchers(HttpMethod.POST, "/api/v1/animals").hasAnyRole("BIOLOGIST", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/animals/*").hasAnyRole("BIOLOGIST", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/animals/*").hasAnyRole("BIOLOGIST", "ADMIN")
+
+                        .requestMatchers(HttpMethod.POST, "/api/v1/species").hasAnyRole("BIOLOGIST", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/species/*").hasAnyRole("BIOLOGIST", "ADMIN")
+
+
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

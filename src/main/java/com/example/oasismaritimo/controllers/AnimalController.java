@@ -2,6 +2,7 @@ package com.example.oasismaritimo.controllers;
 
 import com.example.oasismaritimo.domain.dto.animal.AnimalRequestDTO;
 import com.example.oasismaritimo.domain.dto.animal.AnimalResponseDTO;
+import com.example.oasismaritimo.domain.dto.animal.AnimalUpdateDTO;
 import com.example.oasismaritimo.facade.AnimalFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +32,8 @@ public class AnimalController {
     }
 
     @PutMapping("/{name}")
-    public ResponseEntity<AnimalResponseDTO> updateAnimal(@PathVariable String name, @RequestBody AnimalRequestDTO animalRequestDTO) {
-        return ResponseEntity.ok(animalFacade.updateAnimal(name, animalRequestDTO));
+    public ResponseEntity<AnimalResponseDTO> updateAnimal(@PathVariable String name, @RequestBody AnimalUpdateDTO animalUpdateDto) {
+        return ResponseEntity.ok(animalFacade.updateAnimal(name, animalUpdateDto));
     }
 
     @DeleteMapping("/{name}")
