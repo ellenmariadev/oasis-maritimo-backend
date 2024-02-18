@@ -1,5 +1,6 @@
-package com.example.oasismaritimo.models;
+package com.example.oasismaritimo.domain.model;
 
+import com.example.oasismaritimo.domain.dto.animal.AnimalRequestDTO;
 import jakarta.persistence.*;
 
 @Entity
@@ -16,10 +17,10 @@ public class Animal {
 
     }
 
-    public Animal(String name, String species, int age) {
-        this.name = name;
-        this.species = species;
-        this.age = age;
+    public Animal(AnimalRequestDTO data) {
+        this.name = data.name();
+        this.species = data.species();
+        this.age = data.age();
     }
 
     public int getId() {

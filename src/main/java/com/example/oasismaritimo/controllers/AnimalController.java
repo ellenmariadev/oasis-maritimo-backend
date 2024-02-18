@@ -1,31 +1,43 @@
 package com.example.oasismaritimo.controllers;
 
-import com.example.oasismaritimo.models.Animal;
-import com.example.oasismaritimo.repository.AnimalRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.oasismaritimo.domain.dto.animal.AnimalRequestDTO;
+import com.example.oasismaritimo.domain.dto.animal.AnimalResponseDTO;
+import com.example.oasismaritimo.facade.AnimalFacade;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/animals")
 public class AnimalController {
-    private final AnimalRepository animalRepository;
+    @Autowired
+    private AnimalFacade animalFacade;
 
-    public AnimalController(AnimalRepository animalRepository) {
-        this.animalRepository = animalRepository;
+    @GetMapping
+    public ResponseEntity<List<AnimalResponseDTO>> getAllAnimals() {
+        return ResponseEntity.ok(animalFacade.getAllAnimals());
     }
 
-    @GetMapping()
-    public List<Animal> getAnimals() {
-        return animalRepository.findAll();
+    @PostMapping
+    public ResponseEntity<AnimalResponseDTO> createAnimal(@RequestBody AnimalRequestDTO animalRequestDTO) {
+        return ResponseEntity.ok(animalFacade.createAnimal(animalRequestDTO));
     }
 
     @GetMapping("/{name}")
-    public Animal getAnimal(@PathVariable("name") String name) {
-        return animalRepository.findByName(name);
+    public ResponseEntity<AnimalResponseDTO> getAnimal(@PathVariable String name) {
+        return ResponseEntity.ok(animalFacade.getAnimal(name));
+    }
+
+    @PutMapping("/{name}")
+    public ResponseEntity<AnimalResponseDTO> updateAnimal(@PathVariable String name, @RequestBody AnimalRequestDTO animalRequestDTO) {
+        return ResponseEntity.ok(animalFacade.updateAnimal(name, animalRequestDTO));
+    }
+
+    @DeleteMapping("/{name}")
+    public ResponseEntity<Void> deleteAnimal(@PathVariable String name) {
+        animalFacade.deleteAnimal(name);
+        return ResponseEntity.noContent().build();
     }
 }
-
