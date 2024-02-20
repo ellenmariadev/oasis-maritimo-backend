@@ -4,7 +4,7 @@ create table IF NOT EXISTS species(
 );
 
 create table IF NOT EXISTS animal(
-    id uuid default gen_random_uuid(),
+    id uuid primary key default gen_random_uuid(),
     name varchar(100) not null,
     species uuid,
     age int not null,
@@ -33,4 +33,32 @@ create table IF NOT EXISTS task(
     animal_id uuid,
     FOREIGN KEY (author_id) REFERENCES users(id),
     FOREIGN KEY (animal_id) REFERENCES animal(id)
+);
+
+-- DROP TABLE IF EXISTS annotation;
+-- DROP TABLE IF EXISTS tag;
+-- DROP TABLE IF EXISTS annotation_tags;
+
+create table IF NOT EXISTS annotation(
+    id uuid primary key default gen_random_uuid(),
+    title varchar(100) not null,
+    description text,
+    created_at timestamp DEFAULT current_timestamp,
+    author_id uuid,
+    animal_id uuid not null,
+    FOREIGN KEY (author_id) REFERENCES users(id),
+    FOREIGN KEY (animal_id) REFERENCES animal(id)
+);
+
+create table IF NOT EXISTS tag(
+    id uuid primary key default gen_random_uuid(),
+    name varchar(100) not null unique
+);
+
+create table IF NOT EXISTS annotation_tags(
+    annotation_id uuid,
+    tag_id uuid,
+    PRIMARY KEY (annotation_id, tag_id),
+    FOREIGN KEY (annotation_id) REFERENCES annotation(id),
+    FOREIGN KEY (tag_id) REFERENCES tag(id)
 );

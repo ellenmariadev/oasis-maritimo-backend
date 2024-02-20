@@ -44,6 +44,14 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.PUT, "/api/v1/tasks/*").hasAnyRole("CARETAKER", "ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/tasks/*").hasAnyRole("CARETAKER", "ADMIN")
 
+                        .requestMatchers(HttpMethod.POST, "/api/v1/tags/*").hasAnyRole("BIOLOGIST", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/tags/*").hasAnyRole("BIOLOGIST", "ADMIN")
+
+                        .requestMatchers(HttpMethod.POST, "/api/v1/annotations/*").hasAnyRole("BIOLOGIST", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/annotations/*").hasAnyRole("BIOLOGIST", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/annotations/*").hasAnyRole("BIOLOGIST", "ADMIN")
+
+
 
                         .anyRequest().authenticated()
                 )
