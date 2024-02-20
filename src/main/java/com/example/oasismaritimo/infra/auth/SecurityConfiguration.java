@@ -40,6 +40,10 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/api/v1/species").hasAnyRole("BIOLOGIST", "ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/species/*").hasAnyRole("BIOLOGIST", "ADMIN")
 
+                        .requestMatchers(HttpMethod.POST, "/api/v1/tasks").hasAnyRole("CARETAKER", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/tasks/*").hasAnyRole("CARETAKER", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/tasks/*").hasAnyRole("CARETAKER", "ADMIN")
+
 
                         .anyRequest().authenticated()
                 )
