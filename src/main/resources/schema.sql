@@ -4,7 +4,7 @@ create table IF NOT EXISTS species(
 );
 
 create table IF NOT EXISTS animal(
-    id uuid default gen_random_uuid(),
+    id uuid primary key default gen_random_uuid(),
     name varchar(100) not null,
     species uuid,
     age int not null,

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class AnimalFacade {
@@ -21,15 +22,15 @@ public class AnimalFacade {
         return animalService.createAnimal(animalRequestDTO);
     }
 
-    public AnimalResponseDTO getAnimal(String name) {
-        return animalService.getAnimal(name);
+    public AnimalResponseDTO getAnimal(UUID id) {
+        return animalService.getAnimal(id);
     }
 
-    public AnimalResponseDTO updateAnimal(String name, AnimalUpdateDTO animalUpdateDTO) {
-        return animalService.updateAnimal(name, animalUpdateDTO);
+    public AnimalResponseDTO updateAnimal(UUID id, AnimalUpdateDTO animalUpdateDTO) {
+        return animalService.updateAnimal(id, animalUpdateDTO);
     }
 
-    public void deleteAnimal(String name) {
-        animalService.deleteAnimal(name);
+    public void deleteAnimal(UUID id) {
+        animalService.deleteAnimal(id);
     }
 }
