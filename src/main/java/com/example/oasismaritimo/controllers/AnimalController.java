@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/animals")
@@ -26,19 +27,19 @@ public class AnimalController {
         return ResponseEntity.ok(animalFacade.createAnimal(animalRequestDTO));
     }
 
-    @GetMapping("/{name}")
-    public ResponseEntity<AnimalResponseDTO> getAnimal(@PathVariable String name) {
-        return ResponseEntity.ok(animalFacade.getAnimal(name));
+    @GetMapping("/{id}")
+    public ResponseEntity<AnimalResponseDTO> getAnimal(@PathVariable UUID id) {
+        return ResponseEntity.ok(animalFacade.getAnimal(id));
     }
 
-    @PutMapping("/{name}")
-    public ResponseEntity<AnimalResponseDTO> updateAnimal(@PathVariable String name, @RequestBody AnimalUpdateDTO animalUpdateDto) {
-        return ResponseEntity.ok(animalFacade.updateAnimal(name, animalUpdateDto));
+    @PutMapping("/{id}")
+    public ResponseEntity<AnimalResponseDTO> updateAnimal(@PathVariable UUID id, @RequestBody AnimalUpdateDTO animalUpdateDto) {
+        return ResponseEntity.ok(animalFacade.updateAnimal(id, animalUpdateDto));
     }
 
-    @DeleteMapping("/{name}")
-    public ResponseEntity<Void> deleteAnimal(@PathVariable String name) {
-        animalFacade.deleteAnimal(name);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteAnimal(@PathVariable  UUID id) {
+        animalFacade.deleteAnimal(id);
         return ResponseEntity.noContent().build();
     }
 }

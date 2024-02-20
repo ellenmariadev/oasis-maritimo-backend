@@ -51,17 +51,17 @@ public class AnimalService {
         return new AnimalResponseDTO(animal);
     }
 
-    public AnimalResponseDTO getAnimal(String name) {
-        Animal animal = animalRepository.findByName(name);
+    public AnimalResponseDTO getAnimal(UUID id) {
+        Animal animal = animalRepository.findAnimalById(id);
         if (animal == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal with name " + name + " not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal with id " + id + " not found");
         }
         return new AnimalResponseDTO(animal);
     }
-    public AnimalResponseDTO updateAnimal(String name, AnimalUpdateDTO animalUpdateDTO) {
-        Animal animal = animalRepository.findByName(name);
+    public AnimalResponseDTO updateAnimal(UUID id, AnimalUpdateDTO animalUpdateDTO) {
+        Animal animal = animalRepository.findAnimalById(id);
         if (animal == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal with name " + name + " not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal with id " + id + " not found");
         }
         try {
             animalUpdateDTO.name().ifPresent(animal::setName);
@@ -83,10 +83,10 @@ public class AnimalService {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Error updating animal", e);
         }
     }
-    public ResponseEntity<?> deleteAnimal(String name) {
-        Animal animal = animalRepository.findByName(name);
+    public ResponseEntity<?> deleteAnimal(UUID id) {
+        Animal animal = animalRepository.findAnimalById(id);
         if (animal == null) {
-            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), "Animal with name " + name + " not found", "");
+            ErrorResponse errorResponse = new ErrorResponse(HttpStatus.NOT_FOUND.value(), "Animal with id " + id + " not found", "");
             return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
         }
         try {
