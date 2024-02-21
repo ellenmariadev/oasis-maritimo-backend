@@ -7,7 +7,6 @@ import com.example.oasismaritimo.domain.dto.animal.AnimalUpdateDTO;
 import com.example.oasismaritimo.domain.model.Animal;
 import com.example.oasismaritimo.domain.model.Specie;
 import com.example.oasismaritimo.repositories.AnimalRepository;
-import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.UUID;
 
 @Service
@@ -51,13 +49,10 @@ public class AnimalService {
         return new AnimalResponseDTO(animal);
     }
 
-    public AnimalResponseDTO getAnimal(UUID id) {
-        Animal animal = animalRepository.findAnimalById(id);
-        if (animal == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Animal with id " + id + " not found");
-        }
-        return new AnimalResponseDTO(animal);
+    public Animal findAnimalById(UUID id) {
+        return animalRepository.findAnimalById(id);
     }
+
     public AnimalResponseDTO updateAnimal(UUID id, AnimalUpdateDTO animalUpdateDTO) {
         Animal animal = animalRepository.findAnimalById(id);
         if (animal == null) {

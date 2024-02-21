@@ -35,10 +35,6 @@ create table IF NOT EXISTS task(
     FOREIGN KEY (animal_id) REFERENCES animal(id)
 );
 
--- DROP TABLE IF EXISTS annotation;
--- DROP TABLE IF EXISTS tag;
--- DROP TABLE IF EXISTS annotation_tags;
-
 create table IF NOT EXISTS annotation(
     id uuid primary key default gen_random_uuid(),
     title varchar(100) not null,
@@ -61,4 +57,16 @@ create table IF NOT EXISTS annotation_tags(
     PRIMARY KEY (annotation_id, tag_id),
     FOREIGN KEY (annotation_id) REFERENCES annotation(id),
     FOREIGN KEY (tag_id) REFERENCES tag(id)
+);
+
+create table IF NOT EXISTS appointment(
+    id uuid primary key default gen_random_uuid(),
+    description text,
+    date date,
+    time time,
+    veterinarian_id uuid,
+    animal_id uuid,
+    status varchar(20) check (status in ('SCHEDULED', 'COMPLETED', 'CANCELLED')) default 'SCHEDULED',
+    FOREIGN KEY (veterinarian_id) REFERENCES users(id),
+    FOREIGN KEY (animal_id) REFERENCES animal(id)
 );
