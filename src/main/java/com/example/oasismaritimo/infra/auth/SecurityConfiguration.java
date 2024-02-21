@@ -51,6 +51,10 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.DELETE, "/api/v1/annotations/*").hasAnyRole("BIOLOGIST", "ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/annotations/*").hasAnyRole("BIOLOGIST", "ADMIN")
 
+                        .requestMatchers(HttpMethod.POST, "/api/v1/appointments/*").hasAnyRole("VETERINARIAN", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/appointments/*").hasAnyRole("VETERINARIAN", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/appointments/*").hasAnyRole("VETERINARIAN", "ADMIN")
+
 
 
                         .anyRequest().authenticated()
