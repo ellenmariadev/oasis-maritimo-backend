@@ -1,7 +1,6 @@
 package com.example.oasismaritimo.domain.model;
 
 import com.example.oasismaritimo.domain.dto.annotation.AnnotationRequestDTO;
-import com.example.oasismaritimo.domain.dto.task.TaskRequestDTO;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -38,9 +37,9 @@ public class Annotation {
 
     public Annotation() {}
 
-    public Annotation(AnnotationRequestDTO annotationRequestDTODTO, User author, Animal animal, Set<Tag> tags) {
-        this.title = annotationRequestDTODTO.title();
-        this.description = annotationRequestDTODTO.description();
+    public Annotation(AnnotationRequestDTO annotationRequestDTO, User author, Animal animal, Set<Tag> tags) {
+        this.title = annotationRequestDTO.title();
+        this.description = annotationRequestDTO.description();
         this.tags = tags;
         this.author = author;
         this.animal = animal;
