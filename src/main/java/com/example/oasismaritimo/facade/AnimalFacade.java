@@ -3,6 +3,7 @@ package com.example.oasismaritimo.facade;
 import com.example.oasismaritimo.domain.dto.animal.AnimalRequestDTO;
 import com.example.oasismaritimo.domain.dto.animal.AnimalResponseDTO;
 import com.example.oasismaritimo.domain.dto.animal.AnimalUpdateDTO;
+import com.example.oasismaritimo.domain.model.Animal;
 import com.example.oasismaritimo.services.AnimalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,8 @@ public class AnimalFacade {
     }
 
     public AnimalResponseDTO getAnimal(UUID id) {
-        return animalService.getAnimal(id);
+        Animal animal = animalService.findAnimalById(id);
+        return new AnimalResponseDTO(animal);
     }
 
     public AnimalResponseDTO updateAnimal(UUID id, AnimalUpdateDTO animalUpdateDTO) {
