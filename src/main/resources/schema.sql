@@ -3,6 +3,7 @@ create table IF NOT EXISTS species(
     name varchar(100) not null
 );
 
+
 create table IF NOT EXISTS animal(
     id uuid primary key default gen_random_uuid(),
     name varchar(100) not null,
@@ -13,6 +14,7 @@ create table IF NOT EXISTS animal(
     weight decimal not null,
     length decimal not null,
     habitat varchar(100),
+    image_url varchar(255),
     FOREIGN KEY (species) REFERENCES species(id)
 );
 
