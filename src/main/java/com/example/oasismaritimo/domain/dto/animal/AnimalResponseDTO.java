@@ -17,7 +17,8 @@ public record AnimalResponseDTO(
         String diet,
         Double weight,
         Double length,
-        String habitat
+        String habitat,
+        String imageUrl
 ) {
     public AnimalResponseDTO(Animal animal){
         this(
@@ -29,7 +30,8 @@ public record AnimalResponseDTO(
                 animal.getDiet(),
                 animal.getWeight(),
                 animal.getLength(),
-                animal.getHabitat()
+                animal.getHabitat(),
+                animal.getImageUrl()
         );
     }
 }

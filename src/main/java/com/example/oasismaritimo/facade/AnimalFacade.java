@@ -7,6 +7,7 @@ import com.example.oasismaritimo.domain.model.Animal;
 import com.example.oasismaritimo.services.AnimalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.UUID;
@@ -19,8 +20,9 @@ public class AnimalFacade {
     public List<AnimalResponseDTO> getAllAnimals() {
         return animalService.getAllAnimals();
     }
-    public AnimalResponseDTO createAnimal(AnimalRequestDTO animalRequestDTO) {
-        return animalService.createAnimal(animalRequestDTO);
+
+    public AnimalResponseDTO createAnimal(MultipartFile image, AnimalRequestDTO animalRequestDTO) throws Exception {
+        return animalService.createAnimal(image, animalRequestDTO);
     }
 
     public AnimalResponseDTO getAnimal(UUID id) {

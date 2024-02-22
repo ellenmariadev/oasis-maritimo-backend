@@ -1,4 +1,5 @@
 package com.example.oasismaritimo.domain.model;
+import com.example.oasismaritimo.domain.dto.animal.AnimalRequestDTO;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -20,21 +21,32 @@ public class Animal {
     private double weight;
     private double length;
     private String habitat;
+    private String imageUrl;
 
     public Animal() {
 
     }
 
-    public Animal(String name, Specie species, int age, double weight, double length, String habitat, Date arrivalDate, String diet) {
-        this.name = name;
+    public Animal(AnimalRequestDTO animalRequestDTO, Specie species, String imageUrl) {
+        this.name = animalRequestDTO.name();
         this.species = species;
-        this.age = age;
-        this.weight = weight;
-        this.length = length;
-        this.habitat = habitat;
-        this.arrivalDate = arrivalDate;
-        this.diet = diet;
+        this.age = animalRequestDTO.age();
+        this.weight = animalRequestDTO.weight();
+        this.length = animalRequestDTO.length();
+        this.habitat = animalRequestDTO.habitat();
+        this.arrivalDate = animalRequestDTO.arrivalDate();
+        this.diet = animalRequestDTO.diet();
+        this.imageUrl = imageUrl;
     }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
 
     public Date getArrivalDate() {
         return arrivalDate;

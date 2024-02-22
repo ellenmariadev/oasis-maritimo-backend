@@ -18,5 +18,6 @@ public record AnimalRequestDTO (
         Double weight,
         @NotNull
         Double length,
-        String habitat
+        String habitat,
+        String imageUrl
 ) {}
