@@ -5,7 +5,7 @@ import com.example.oasismaritimo.domain.dto.animal.AnimalResponseDTO;
 import com.example.oasismaritimo.domain.dto.animal.AnimalUpdateDTO;
 import com.example.oasismaritimo.facade.AnimalFacade;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,12 +25,8 @@ public class AnimalController {
     }
 
     @PostMapping
-    public ResponseEntity<AnimalResponseDTO> createAnimal(@RequestParam("image") MultipartFile image, @RequestPart("animal") AnimalRequestDTO animalRequestDTO) {
-        try {
+    public ResponseEntity<AnimalResponseDTO> createAnimal(@RequestParam("image") MultipartFile image, @RequestPart("animal") AnimalRequestDTO animalRequestDTO) throws Exception {
             return ResponseEntity.ok(animalFacade.createAnimal(image, animalRequestDTO));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
     }
 
     @GetMapping("/{id}")
@@ -41,6 +37,12 @@ public class AnimalController {
     @PutMapping("/{id}")
     public ResponseEntity<AnimalResponseDTO> updateAnimal(@PathVariable UUID id, @RequestBody AnimalUpdateDTO animalUpdateDto) {
         return ResponseEntity.ok(animalFacade.updateAnimal(id, animalUpdateDto));
+    }
+
+    @PutMapping(value = "/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<AnimalResponseDTO> updateAnimalImage(@PathVariable UUID id,
+                                                               @RequestPart("image") MultipartFile image) throws Exception {
+        return ResponseEntity.ok(animalFacade.updateAnimalImage(id, image));
     }
 
     @DeleteMapping("/{id}")
