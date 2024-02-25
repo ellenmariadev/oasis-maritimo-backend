@@ -24,7 +24,7 @@ public class TagController {
     }
 
     @GetMapping("/{id}")
-    public Tag getTagById(@PathVariable UUID id) {
+    public Tag getTagById(@PathVariable("id") UUID id) {
         return tagFacade.getTagById(id);
     }
 
@@ -34,7 +34,7 @@ public class TagController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTag(@PathVariable UUID id) {
+    public void deleteTag(@PathVariable("id") UUID id) {
         tagFacade.deleteTag(id);
     }
 }

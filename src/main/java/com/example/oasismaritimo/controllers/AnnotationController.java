@@ -27,7 +27,7 @@ public class AnnotationController {
     }
 
     @GetMapping("/{id}")
-    public Annotation getAnnotationById(@PathVariable UUID id) {
+    public Annotation getAnnotationById(@PathVariable("id") UUID id) {
         return annotationFacade.getAnnotationById(id);
     }
 
@@ -37,12 +37,12 @@ public class AnnotationController {
     }
 
     @PutMapping("/{id}")
-    public Annotation updateAnnotation(@PathVariable UUID id, @RequestBody AnnotationUpdateDTO annotationUpdateDTO) {
+    public Annotation updateAnnotation(@PathVariable("id") UUID id, @RequestBody AnnotationUpdateDTO annotationUpdateDTO) {
         return annotationFacade.updateAnnotation(id, annotationUpdateDTO);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAnnotation(@PathVariable UUID id) {
+    public void deleteAnnotation(@PathVariable("id") UUID id) {
         annotationFacade.deleteAnnotation(id);
     }
 }

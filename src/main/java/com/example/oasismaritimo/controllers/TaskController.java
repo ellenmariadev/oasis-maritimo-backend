@@ -33,17 +33,17 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TaskResponseDTO> getTaskById(@PathVariable UUID id) {
+    public ResponseEntity<TaskResponseDTO> getTaskById(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(taskFacade.getTaskById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TaskResponseDTO> updateTask(@PathVariable UUID id, @RequestBody TaskUpdateDTO taskRequestDTO) {
+    public ResponseEntity<TaskResponseDTO> updateTask(@PathVariable("id") UUID id, @RequestBody TaskUpdateDTO taskRequestDTO) {
         return ResponseEntity.ok(taskFacade.updateTask(id, taskRequestDTO));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTask(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteTask(@PathVariable("id") UUID id) {
         taskFacade.deleteTask(id);
         return ResponseEntity.noContent().build();
     }

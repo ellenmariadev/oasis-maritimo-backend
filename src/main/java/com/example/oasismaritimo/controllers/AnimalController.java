@@ -30,23 +30,23 @@ public class AnimalController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AnimalResponseDTO> getAnimal(@PathVariable UUID id) {
+    public ResponseEntity<AnimalResponseDTO> getAnimal(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(animalFacade.getAnimal(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AnimalResponseDTO> updateAnimal(@PathVariable UUID id, @RequestBody AnimalUpdateDTO animalUpdateDto) {
+    public ResponseEntity<AnimalResponseDTO> updateAnimal(@PathVariable("id") UUID id, @RequestBody AnimalUpdateDTO animalUpdateDto) {
         return ResponseEntity.ok(animalFacade.updateAnimal(id, animalUpdateDto));
     }
 
     @PutMapping(value = "/{id}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<AnimalResponseDTO> updateAnimalImage(@PathVariable UUID id,
+    public ResponseEntity<AnimalResponseDTO> updateAnimalImage(@PathVariable("id") UUID id,
                                                                @RequestPart("image") MultipartFile image) throws Exception {
         return ResponseEntity.ok(animalFacade.updateAnimalImage(id, image));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAnimal(@PathVariable  UUID id) {
+    public ResponseEntity<Void> deleteAnimal(@PathVariable("id")  UUID id) {
         animalFacade.deleteAnimal(id);
         return ResponseEntity.noContent().build();
     }

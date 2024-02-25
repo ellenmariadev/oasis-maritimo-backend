@@ -28,7 +28,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AppointmentResponseDTO> getAppointmentById(@PathVariable UUID id) {
+    public ResponseEntity<AppointmentResponseDTO> getAppointmentById(@PathVariable("id") UUID id) {
         return ResponseEntity.ok(appointmentFacade.getAppointmentById(id));
     }
 
@@ -38,12 +38,12 @@ public class AppointmentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AppointmentResponseDTO> updateAppointment(@PathVariable UUID id, @RequestBody AppointmentUpdateDTO appointmentUpdateDTO) {
+    public ResponseEntity<AppointmentResponseDTO> updateAppointment(@PathVariable("id") UUID id, @RequestBody AppointmentUpdateDTO appointmentUpdateDTO) {
         return ResponseEntity.ok(appointmentFacade.updateAppointment(id, appointmentUpdateDTO));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteAppointment(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteAppointment(@PathVariable("id") UUID id) {
         appointmentFacade.deleteAppointment(id);
         return ResponseEntity.noContent().build();
     }

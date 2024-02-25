@@ -24,13 +24,13 @@ public class SpecieController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteSpecie(@PathVariable UUID id) {
+    public ResponseEntity<?> deleteSpecie(@PathVariable("id") UUID id) {
         specieService.deleteSpecie(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Specie> getSpecieById(@PathVariable UUID id) {
+    public ResponseEntity<Specie> getSpecieById(@PathVariable("id") UUID id) {
         Specie specie = specieService.getSpecieById(id);
         return new ResponseEntity<>(specie, HttpStatus.OK);
     }
