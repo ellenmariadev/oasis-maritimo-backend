@@ -3,6 +3,8 @@ package com.example.oasismaritimo.services;
 import com.example.oasismaritimo.domain.dto.annotation.AnnotationRequestDTO;
 import com.example.oasismaritimo.domain.dto.annotation.AnnotationUpdateDTO;
 import com.example.oasismaritimo.domain.model.*;
+import com.example.oasismaritimo.exceptions.InvalidRequestException;
+import com.example.oasismaritimo.exceptions.NotFoundException;
 import com.example.oasismaritimo.repositories.AnimalRepository;
 import com.example.oasismaritimo.repositories.AnnotationRepository;
 import com.example.oasismaritimo.repositories.TagRepository;
@@ -10,10 +12,7 @@ import com.example.oasismaritimo.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class AnnotationService {
@@ -35,7 +34,7 @@ public class AnnotationService {
     }
 
     public Annotation getAnnotationById(UUID id) {
-        return annotationRepository.findById(id).orElse(null);
+        return annotationRepository.findById(id).orElseThrow(() -> new NotFoundException("Anotação"));
     }
 
     public Annotation createAnnotation(AnnotationRequestDTO annotationRequestDTO) {
@@ -43,10 +42,10 @@ public class AnnotationService {
         Animal animal = null;
         Set<Tag> tags = new HashSet<>();
         if (annotationRequestDTO.authorId() != null) {
-            author = userRepository.findById(annotationRequestDTO.authorId()).orElse(null);
+            author = userRepository.findById(annotationRequestDTO.authorId()).orElseThrow(() -> new InvalidRequestException("Autor inválido."));
         }
         if (annotationRequestDTO.animalId() != null) {
-            animal = animalRepository.findById(annotationRequestDTO.animalId()).orElse(null);
+            animal = animalRepository.findById(annotationRequestDTO.animalId()).orElseThrow(() -> new InvalidRequestException("Animal inválido."));
         }
         if (annotationRequestDTO.tags() != null && !annotationRequestDTO.tags().isEmpty()) {
             tags.addAll(tagRepository.findAllById(annotationRequestDTO.tags()));
@@ -57,15 +56,13 @@ public class AnnotationService {
     }
 
     public Annotation updateAnnotation(UUID id, AnnotationUpdateDTO annotationUpdateDTO) {
-        Annotation annotation = annotationRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Annotation not found"));
+        Annotation annotation = annotationRepository.findById(id).orElseThrow(() -> new NotFoundException("Anotação"));
 
         annotationUpdateDTO.title().ifPresent(annotation::setTitle);
         annotationUpdateDTO.description().ifPresent(annotation::setDescription);
 
         annotationUpdateDTO.animalId().ifPresent(animalId -> {
-            Animal animal = animalRepository.findById(animalId)
-                    .orElseThrow(() -> new RuntimeException("Animal not found"));
+            Animal animal = animalRepository.findById(animalId).orElseThrow(() -> new NotFoundException("Animal"));
             annotation.setAnimal(animal);
         });
 
@@ -77,6 +74,7 @@ public class AnnotationService {
         return annotationRepository.save(annotation);
     }
     public void deleteAnnotation(UUID id) {
+        Optional.ofNullable(getAnnotationById(id)).orElseThrow(() -> new NotFoundException("Anotação"));
         annotationRepository.deleteById(id);
     }
 }

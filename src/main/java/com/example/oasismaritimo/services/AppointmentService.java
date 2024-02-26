@@ -3,11 +3,14 @@ package com.example.oasismaritimo.services;
 import com.example.oasismaritimo.domain.dto.appointment.AppointmentRequestDTO;
 import com.example.oasismaritimo.domain.dto.appointment.AppointmentUpdateDTO;
 import com.example.oasismaritimo.domain.model.*;
+import com.example.oasismaritimo.exceptions.InvalidRequestException;
+import com.example.oasismaritimo.exceptions.NotFoundException;
 import com.example.oasismaritimo.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -29,17 +32,17 @@ public class AppointmentService {
     }
 
     public Appointment getAppointmentById(UUID id) {
-        return appointmentRepository.findById(id).orElse(null);
+        return appointmentRepository.findById(id).orElseThrow(() -> new NotFoundException("Agendamento"));
     }
 
     public Appointment createAppointment(AppointmentRequestDTO appointmentRequestDTO) {
         User author = null;
         Animal animal = null;
         if (appointmentRequestDTO.veterinarianId() != null) {
-            author = userRepository.findById(appointmentRequestDTO.veterinarianId()).orElse(null);
+            author = userRepository.findById(appointmentRequestDTO.veterinarianId()).orElseThrow(() -> new InvalidRequestException("Informe o veterinário."));
         }
         if (appointmentRequestDTO.animalId() != null) {
-            animal = animalRepository.findById(appointmentRequestDTO.animalId()).orElse(null);
+            animal = animalRepository.findById(appointmentRequestDTO.animalId()).orElseThrow(() -> new InvalidRequestException("Informe o animal."));
         }
         Appointment appointment = new Appointment(appointmentRequestDTO, author, animal);
         appointment = appointmentRepository.save(appointment);
@@ -47,7 +50,7 @@ public class AppointmentService {
     }
 
     public Appointment updateAppointment(UUID id, AppointmentUpdateDTO appointmentUpdateDTO) {
-        Appointment appointment = appointmentRepository.findById(id).orElseThrow(() -> new RuntimeException("Appointment not found"));
+        Appointment appointment = appointmentRepository.findById(id).orElseThrow(() -> new NotFoundException("Agendamento"));
         appointmentUpdateDTO.description().ifPresent(appointment::setDescription);
         appointmentUpdateDTO.date().ifPresent(appointment::setDate);
         appointmentUpdateDTO.time().ifPresent(appointment::setTime);
@@ -55,7 +58,7 @@ public class AppointmentService {
 
         appointmentUpdateDTO.animalId().ifPresent(animalId -> {
             Animal animal = animalRepository.findById(animalId)
-                    .orElseThrow(() -> new RuntimeException("Animal not found"));
+                    .orElseThrow(() -> new NotFoundException("Animal"));
             appointment.setAnimal(animal);
         });
 
@@ -64,6 +67,7 @@ public class AppointmentService {
 
 
     public void deleteAppointment(UUID id) {
+        Optional.ofNullable(getAppointmentById(id)).orElseThrow(() -> new NotFoundException("Agendamento"));
         appointmentRepository.deleteById(id);
     }
 }

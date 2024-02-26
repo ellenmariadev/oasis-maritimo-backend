@@ -5,21 +5,19 @@ import com.example.oasismaritimo.domain.dto.animal.AnimalResponseDTO;
 import com.example.oasismaritimo.domain.dto.animal.AnimalUpdateDTO;
 import com.example.oasismaritimo.domain.model.Animal;
 import com.example.oasismaritimo.domain.model.Specie;
-import com.example.oasismaritimo.exceptions.animal.AnimalNotFoundException;
-import com.example.oasismaritimo.exceptions.animal.InvalidAnimalRequestException;
-import com.example.oasismaritimo.exceptions.animal.SpecieNotFoundException;
+import com.example.oasismaritimo.exceptions.InvalidRequestException;
+import com.example.oasismaritimo.exceptions.NotFoundException;
 import com.example.oasismaritimo.infra.aws.ImageService;
 import com.example.oasismaritimo.services.AnimalService;
 import com.example.oasismaritimo.services.SpecieService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -42,6 +40,12 @@ public class AnimalFacade {
         String originalFileName = image.getOriginalFilename();
         String originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
 
+        // Permitir enviar apenas arquitvos no formato de imagens
+        List<String> allowedExtensions = List.of(".png", ".jpg", ".svg", ".webp");
+        if (!allowedExtensions.contains(originalFileExtension.toLowerCase())) {
+            throw new InvalidRequestException("Tipo de arquivo inválido. Apenas PNG, JPG, SVG, e WEBP são permitidos.");
+        }
+
         // Cria um arquivo temporário com a extensão do arquivo original
         File tempFile = File.createTempFile("image", originalFileExtension);
 
@@ -50,7 +54,7 @@ public class AnimalFacade {
         String imageUrl = imageService.uploadImage(tempFile, bucketName);
 
         if (animalRequestDTO.name() == null || animalRequestDTO.speciesId() == null) {
-            throw new InvalidAnimalRequestException("Name and speciesId must not be null");
+            throw new InvalidRequestException("Nome ou espécie não informados.");
         }
         AnimalRequestDTO animalRequest = new AnimalRequestDTO(
                 animalRequestDTO.name(),
@@ -65,13 +69,10 @@ public class AnimalFacade {
         );
 
         UUID speciesId = animalRequest.speciesId();
-        if (speciesId == null) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Species id must not be null");
-        }
         Specie species = specieService.getSpecieById(speciesId);
-        if (species == null) {
-            throw new SpecieNotFoundException(speciesId);
-        }
+
+        Optional.ofNullable(species).orElseThrow(() -> new NotFoundException("Informe uma espécie válida."));
+
         Animal animal = new Animal(animalRequestDTO, species, imageUrl);
         animal = animalService.createAnimal(animal);
         return new AnimalResponseDTO(animal);
@@ -83,9 +84,9 @@ public class AnimalFacade {
     }
     public AnimalResponseDTO updateAnimal(UUID id, AnimalUpdateDTO animalUpdateDTO) {
         Animal animal = animalService.findAnimalById(id);
-        if (animal == null) {
-            throw new AnimalNotFoundException(id);
-        }
+
+        Optional.ofNullable(animal).orElseThrow(() -> new NotFoundException("Animal"));
+
         animalUpdateDTO.name().ifPresent(animal::setName);
         animalUpdateDTO.age().ifPresent(animal::setAge);
 
@@ -94,7 +95,7 @@ public class AnimalFacade {
             UUID speciesId = UUID.fromString(stringId);
             Specie species = specieService.getSpecieById(speciesId);
             if (species == null) {
-                throw new SpecieNotFoundException(speciesId);
+                throw new NotFoundException("Espécie");
             }
             animal.setSpecies(species);
         }
@@ -105,9 +106,8 @@ public class AnimalFacade {
 
     public AnimalResponseDTO updateAnimalImage(UUID id, MultipartFile image) throws Exception {
         Animal animal = animalService.findAnimalById(id);
-        if (animal == null) {
-            throw new AnimalNotFoundException(id);
-        }
+
+        Optional.ofNullable(animal).orElseThrow(() -> new NotFoundException("Animal"));
 
         String originalFileName = image.getOriginalFilename();
         String originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
@@ -123,10 +123,6 @@ public class AnimalFacade {
     }
 
     public void deleteAnimal(UUID id) {
-        Animal animal = animalService.findAnimalById(id);
-        if (animal == null) {
-            throw new AnimalNotFoundException(id);
-        }
-        animalService.deleteAnimal(animal);
+        animalService.deleteAnimal(id);
     }
 }

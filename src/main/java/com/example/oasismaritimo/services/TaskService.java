@@ -7,6 +7,7 @@ import com.example.oasismaritimo.domain.model.Animal;
 import com.example.oasismaritimo.domain.model.Task;
 import com.example.oasismaritimo.domain.model.User;
 import com.example.oasismaritimo.domain.model.UserRole;
+import com.example.oasismaritimo.exceptions.NotFoundException;
 import com.example.oasismaritimo.repositories.AnimalRepository;
 import com.example.oasismaritimo.repositories.TaskRepository;
 import com.example.oasismaritimo.repositories.UserRepository;
@@ -37,7 +38,7 @@ public class TaskService {
             author = userRepository.findById(taskRequestDTO.authorId()).orElse(null);
             // A task só pode ser atribuída a um cuidador
             if (author != null && !author.getRole().equals(UserRole.CARETAKER)) {
-                throw new RuntimeException("Author must have the role CARETAKER");
+                throw new RuntimeException("O autor da tarefa deve ser um cuidador.");
             }
         }
         if (taskRequestDTO.animalId() != null) {
@@ -49,7 +50,7 @@ public class TaskService {
     }
 
     public Task getTaskById(UUID id) {
-        return taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
+        return taskRepository.findById(id).orElseThrow(() -> new NotFoundException("Tarefa"));
     }
 
     public TaskResponseDTO updateTask(UUID id, TaskUpdateDTO taskUpdateDTO) {
@@ -65,13 +66,13 @@ public class TaskService {
             if (author != null && author.getRole().equals(UserRole.CARETAKER)) {
                 authorTask.setAuthor(author);
             } else {
-                throw new RuntimeException("Author must have the role CARETAKER");
+                throw new RuntimeException("O autor da tarefa deve ser um cuidador.");
             }
         });
 
         Task animalTask = task;
         taskUpdateDTO.animalId().ifPresent(animalId -> {
-            Animal animal = animalRepository.findById(animalId).orElse(null);
+            Animal animal = animalRepository.findById(animalId).orElseThrow(() -> new NotFoundException("Animal"));
             if (animal != null) {
                 animalTask.setAnimal(animal);
             }

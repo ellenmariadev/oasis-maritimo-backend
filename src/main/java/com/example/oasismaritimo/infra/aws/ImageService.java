@@ -5,7 +5,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.example.oasismaritimo.exceptions.animal.ImageUploadException;
+import com.example.oasismaritimo.exceptions.InvalidRequestException;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -55,7 +55,7 @@ public class ImageService {
             s3.putObject(new PutObjectRequest(bucketName, key, image));
             return s3.getUrl(bucketName, key).toString();
         } catch (Exception e) {
-            throw new ImageUploadException("Failed to upload image to S3");
+            throw new InvalidRequestException("Falha ao enviar imagem.");
         }
     }
 }
