@@ -1,5 +1,7 @@
 package com.example.oasismaritimo.domain.dto.task;
 
+import com.example.oasismaritimo.domain.enums.StatusTask;
+
 import javax.validation.constraints.NotBlank;
 import java.util.UUID;
 
@@ -9,7 +11,7 @@ public record TaskRequestDTO(
 
     String description,
 
-    String status,
+    StatusTask status,
 
     UUID authorId,
 

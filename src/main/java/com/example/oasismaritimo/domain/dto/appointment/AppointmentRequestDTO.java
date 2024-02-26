@@ -1,5 +1,6 @@
 package com.example.oasismaritimo.domain.dto.appointment;
 
+import com.example.oasismaritimo.domain.enums.StatusAppointment;
 import javax.validation.constraints.NotBlank;
 import java.sql.Time;
 import java.util.Date;
@@ -11,7 +12,7 @@ public record AppointmentRequestDTO(
     Date date,
     @NotBlank
     Time time,
-    String status,
+    StatusAppointment status,
     UUID animalId,
     UUID veterinarianId
 

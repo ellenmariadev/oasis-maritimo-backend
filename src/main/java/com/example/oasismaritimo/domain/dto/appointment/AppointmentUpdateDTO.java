@@ -1,6 +1,6 @@
 package com.example.oasismaritimo.domain.dto.appointment;
 
-import com.example.oasismaritimo.domain.enums.Status;
+import com.example.oasismaritimo.domain.enums.StatusAppointment;
 
 import java.sql.Time;
 import java.util.Date;
@@ -11,6 +11,6 @@ public record AppointmentUpdateDTO(
         Optional<String> description,
         Optional<Date> date,
         Optional<Time> time,
-        Optional<Status> status,
+        Optional<StatusAppointment> status,
         Optional<UUID> animalId
 ) { }

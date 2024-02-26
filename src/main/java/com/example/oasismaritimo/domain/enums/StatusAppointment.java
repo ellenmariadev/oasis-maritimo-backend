@@ -1,6 +1,6 @@
 package com.example.oasismaritimo.domain.enums;
 
-public enum Status {
+public enum StatusAppointment {
     SCHEDULED,
     COMPLETED,
     CANCELLED

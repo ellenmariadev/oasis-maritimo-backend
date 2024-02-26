@@ -1,6 +1,6 @@
 package com.example.oasismaritimo.domain.dto.appointment;
 
-import com.example.oasismaritimo.domain.enums.Status;
+import com.example.oasismaritimo.domain.enums.StatusAppointment;
 import com.example.oasismaritimo.domain.model.Animal;
 import com.example.oasismaritimo.domain.model.Appointment;
 import com.example.oasismaritimo.domain.model.User;
@@ -16,7 +16,7 @@ public record AppointmentResponseDTO (
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
         Date date,
         Time time,
-        Status status,
+        StatusAppointment status,
         Animal animal,
         User veterinarian
 ) {

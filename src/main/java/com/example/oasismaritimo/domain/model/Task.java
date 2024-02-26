@@ -1,6 +1,7 @@
 package com.example.oasismaritimo.domain.model;
 
 import com.example.oasismaritimo.domain.dto.task.TaskRequestDTO;
+import com.example.oasismaritimo.domain.enums.StatusTask;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -16,7 +17,7 @@ public class Task {
     private UUID id;
     private String title;
     private String description;
-    private String status;
+    private StatusTask status;
     private Date createdAt;
 
     public Task () {}
@@ -62,11 +63,11 @@ public class Task {
         this.description = description;
     }
 
-    public String getStatus() {
+    public StatusTask getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusTask status) {
         this.status = status;
     }
 

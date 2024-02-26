@@ -1,7 +1,7 @@
 package com.example.oasismaritimo.domain.model;
 
 import com.example.oasismaritimo.domain.dto.appointment.AppointmentRequestDTO;
-import com.example.oasismaritimo.domain.enums.Status;
+import com.example.oasismaritimo.domain.enums.StatusAppointment;
 import jakarta.persistence.*;
 
 import java.sql.Time;
@@ -27,14 +27,14 @@ public class Appointment {
     private Animal animal;
 
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private StatusAppointment status;
 
     public Appointment ()  {}
     public Appointment(AppointmentRequestDTO appointmentRequestDTO, User veterinarian, Animal animal) {
         this.description = appointmentRequestDTO.description();
         this.date = appointmentRequestDTO.date();
         this.time = appointmentRequestDTO.time();
-        this.status = Status.valueOf(appointmentRequestDTO.status());;
+        this.status = appointmentRequestDTO.status();
         this.animal = animal;
         this.veterinarian = veterinarian;
     }
@@ -87,11 +87,12 @@ public class Appointment {
         this.animal = animal;
     }
 
-    public Status getStatus() {
+    public StatusAppointment getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(StatusAppointment status) {
         this.status = status;
     }
+
 }

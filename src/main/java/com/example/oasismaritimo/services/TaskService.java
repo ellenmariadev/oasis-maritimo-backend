@@ -7,6 +7,7 @@ import com.example.oasismaritimo.domain.model.Animal;
 import com.example.oasismaritimo.domain.model.Task;
 import com.example.oasismaritimo.domain.model.User;
 import com.example.oasismaritimo.domain.model.UserRole;
+import com.example.oasismaritimo.exceptions.InvalidRequestException;
 import com.example.oasismaritimo.exceptions.NotFoundException;
 import com.example.oasismaritimo.repositories.AnimalRepository;
 import com.example.oasismaritimo.repositories.TaskRepository;
@@ -38,13 +39,14 @@ public class TaskService {
             author = userRepository.findById(taskRequestDTO.authorId()).orElse(null);
             // A task só pode ser atribuída a um cuidador
             if (author != null && !author.getRole().equals(UserRole.CARETAKER)) {
-                throw new RuntimeException("O autor da tarefa deve ser um cuidador.");
+                throw new InvalidRequestException("O autor da tarefa deve ser um cuidador.");
             }
         }
         if (taskRequestDTO.animalId() != null) {
             animal = animalRepository.findById(taskRequestDTO.animalId()).orElse(null);
         }
         Task task = new Task(taskRequestDTO, author, animal);
+
         task = taskRepository.save(task);
         return new TaskResponseDTO(task);
     }
@@ -66,7 +68,7 @@ public class TaskService {
             if (author != null && author.getRole().equals(UserRole.CARETAKER)) {
                 authorTask.setAuthor(author);
             } else {
-                throw new RuntimeException("O autor da tarefa deve ser um cuidador.");
+                throw new InvalidRequestException("O autor da tarefa deve ser um cuidador.");
             }
         });
 

@@ -54,7 +54,6 @@ public class AppointmentService {
         appointmentUpdateDTO.description().ifPresent(appointment::setDescription);
         appointmentUpdateDTO.date().ifPresent(appointment::setDate);
         appointmentUpdateDTO.time().ifPresent(appointment::setTime);
-        appointmentUpdateDTO.status().ifPresent(appointment::setStatus);
 
         appointmentUpdateDTO.animalId().ifPresent(animalId -> {
             Animal animal = animalRepository.findById(animalId)

@@ -1,5 +1,6 @@
 package com.example.oasismaritimo.domain.dto.task;
 
+import com.example.oasismaritimo.domain.enums.StatusTask;
 import com.example.oasismaritimo.domain.model.Animal;
 import com.example.oasismaritimo.domain.model.Task;
 import com.example.oasismaritimo.domain.model.User;
@@ -13,7 +14,7 @@ public record TaskResponseDTO(
 
         String description,
 
-        String status,
+        StatusTask status,
 
         User author,
 
