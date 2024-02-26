@@ -1,10 +1,16 @@
 package com.example.oasismaritimo.controllers;
 
 import com.example.oasismaritimo.domain.model.Tag;
+import com.example.oasismaritimo.domain.model.User;
 import com.example.oasismaritimo.facade.TagFacade;
+import com.example.oasismaritimo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -12,10 +18,12 @@ import java.util.UUID;
 @RequestMapping("/api/v1/tags")
 public class TagController {
     private final TagFacade tagFacade;
+    private final UserService userService;
 
     @Autowired
-    public TagController(TagFacade tagFacade) {
+    public TagController(TagFacade tagFacade, UserService userService) {
         this.tagFacade = tagFacade;
+        this.userService = userService;
     }
 
     @GetMapping
@@ -29,8 +37,10 @@ public class TagController {
     }
 
     @PostMapping
-    public Tag createTag(@RequestBody Tag tag) {
-        return tagFacade.createTag(tag);
+    public Tag createTag(@Valid @RequestBody Tag tag, Principal principal) {
+        UserDetails userDetails = userService.findByLogin(principal.getName());
+        User user = (User) userDetails;
+        return tagFacade.createTag(tag, user);
     }
 
     @DeleteMapping("/{id}")

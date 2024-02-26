@@ -50,7 +50,8 @@ create table IF NOT EXISTS annotation(
 
 create table IF NOT EXISTS tag(
     id uuid primary key default gen_random_uuid(),
-    name varchar(100) not null unique
+    name varchar(100) not null unique,
+    user_id uuid REFERENCES users(id)
 );
 
 create table IF NOT EXISTS annotation_tags(

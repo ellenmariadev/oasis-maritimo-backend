@@ -1,6 +1,7 @@
 package com.example.oasismaritimo.facade;
 
 import com.example.oasismaritimo.domain.model.Tag;
+import com.example.oasismaritimo.domain.model.User;
 import com.example.oasismaritimo.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,8 +26,8 @@ public class TagFacade {
         return tagService.getTagById(id);
     }
 
-    public Tag createTag(Tag tag) {
-        return tagService.createTag(tag);
+    public Tag createTag(Tag tag, User user) {
+        return tagService.createTag(tag, user);
     }
 
     public void deleteTag(UUID id) {
