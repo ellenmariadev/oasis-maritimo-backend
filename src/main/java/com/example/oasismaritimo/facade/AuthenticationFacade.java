@@ -31,7 +31,7 @@ public class AuthenticationFacade {
      * @param data um objeto AuthenticationDTO contendo login e senha do usuário.
      * @return uma resposta contendo o token de acesso do usuário autenticado.
      */
-    public ResponseEntity login(AuthenticationDTO data) {
+    public ResponseEntity<LoginResponseDTO> login(AuthenticationDTO data) {
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
         var auth = this.authenticationManager.authenticate(usernamePassword);
         User user = (User) auth.getPrincipal();
@@ -45,7 +45,7 @@ public class AuthenticationFacade {
      * @param data um objeto RegisterDTO contendo login, senha e papel do novo usuário.
      * @return uma resposta indicando o sucesso ou falha da criação do usuário.
      */
-    public ResponseEntity register(RegisterDTO data) {
+    public ResponseEntity<RegisterDTO> register(RegisterDTO data) {
         if (this.repository.findByLogin(data.login()) != null) {
             return ResponseEntity.badRequest().build();
         }

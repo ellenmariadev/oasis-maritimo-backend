@@ -12,6 +12,13 @@ public class Specie {
     private UUID id;
     private String name;
 
+    public Specie() {}
+
+    public Specie(String name) {
+        this.id = UUID.randomUUID();
+        this.name = name;
+    }
+
     public UUID getId() {
         return id;
     }

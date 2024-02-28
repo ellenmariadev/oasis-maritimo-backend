@@ -1,4 +1,4 @@
-package com.example.oasismaritimo.domain.model;
+package com.example.oasismaritimo.domain.enums;
 
 public enum UserRole {
     ADMIN("admin"),

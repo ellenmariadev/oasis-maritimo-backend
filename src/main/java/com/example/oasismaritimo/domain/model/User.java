@@ -1,5 +1,6 @@
 package com.example.oasismaritimo.domain.model;
 
+import com.example.oasismaritimo.domain.enums.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;

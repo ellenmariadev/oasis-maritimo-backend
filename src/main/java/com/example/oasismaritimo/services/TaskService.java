@@ -6,7 +6,7 @@ import com.example.oasismaritimo.domain.dto.task.TaskUpdateDTO;
 import com.example.oasismaritimo.domain.model.Animal;
 import com.example.oasismaritimo.domain.model.Task;
 import com.example.oasismaritimo.domain.model.User;
-import com.example.oasismaritimo.domain.model.UserRole;
+import com.example.oasismaritimo.domain.enums.UserRole;
 import com.example.oasismaritimo.exceptions.InvalidRequestException;
 import com.example.oasismaritimo.exceptions.NotFoundException;
 import com.example.oasismaritimo.repositories.AnimalRepository;
