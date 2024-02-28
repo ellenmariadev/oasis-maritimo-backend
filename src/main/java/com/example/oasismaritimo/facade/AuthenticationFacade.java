@@ -36,7 +36,7 @@ public class AuthenticationFacade {
         var auth = this.authenticationManager.authenticate(usernamePassword);
         User user = (User) auth.getPrincipal();
         var token = tokenService.generateToken(user);
-        return ResponseEntity.ok(new LoginResponseDTO(token, data.login(), user.getRole()));
+        return ResponseEntity.ok(new LoginResponseDTO(token, data.login(), user.getRole(), user.getId()));
     }
 
     /**
