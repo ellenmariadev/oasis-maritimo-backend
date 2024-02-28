@@ -1,7 +1,7 @@
 package com.example.oasismaritimo.repositories;
 
 import com.example.oasismaritimo.domain.model.User;
-import com.example.oasismaritimo.domain.model.UserRole;
+import com.example.oasismaritimo.domain.enums.UserRole;
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
