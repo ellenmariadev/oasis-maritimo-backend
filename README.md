@@ -2,46 +2,51 @@
 
 O Sistema de Gerenciamento para Oceanário, também conhecido como Oásis Marítimo, é uma plataforma dedicada ao cuidado, conservação e pesquisa das espécies marinhas em oceanários. Desenvolvido com o objetivo de simplificar e otimizar as operações diárias em ambientes marinhos, o Oásis Marítimo oferece uma variedade de funcionalidades para profissionais envolvidos no cuidado e monitoramento dos animais.
 
-## Funcionalidades Principais
+ ### 🌐 DEPLOY 
+ 
+https://oasis-maritimo-afe4c920a559.herokuapp.com/api/v1
 
-- **Cadastro de Espécies:** Registre informações detalhadas sobre cada espécie marinha, incluindo habitat, comportamento e estado de conservação.
-  
-- **Monitoramento de Animais:** Acompanhe o estado de saúde, alimentação e comportamento de cada animal por meio de fichas individuais.
+## 📑 Documentação
 
-- **Gestão de Tanques:** Mantenha os tanques de exibição em condições ideais, garantindo o bem-estar das espécies marinhas.
-
-- **Registro de Atividades Diárias:** Registre e acompanhe as operações diárias, como alimentação, limpeza e cuidados veterinários.
-
-- **Educação Ambiental:** Disponibilize recursos educativos sobre conservação marinha para visitantes e comunidades locais.
-
-- **Pesquisa Científica:** Facilite o acesso a dados e informações para pesquisas científicas sobre as espécies marinhas.
+ | Route | Description |
+ | ----- | ----------- |
+ | <kbd> /api-docs </kbd> |[Documentação JSON](https://oasis-maritimo-afe4c920a559.herokuapp.com/api-docs)|
+ | <kbd> /swagger.html </kbd>  | [Documentação Swagger](https://oasis-maritimo-afe4c920a559.herokuapp.com/swagger-ui/index.html) |
 
 ## Instalação e Uso
 
-Para utilizar o Oásis Marítimo, siga estas etapas:
-
-1. **Clone este repositório em sua máquina local:**
-
-git clone https://github.com/ellenmariadev/oasis-maritimo.git
-
-2. **Instale as dependências necessárias:**
-
-Certifique-se de ter o Maven instalado em sua máquina e execute o seguinte comando na raiz do projeto:
+1. Clone este repositório em sua máquina local.
+```java
+git clone <https://github.com/ellenmariadev/oasis-maritimo.git>
+```
+2. Instale as dependências necessárias.
+```java
 mvn clean install
-
-3. **Inicie o servidor:**
-
-O comando específico para iniciar o servidor pode variar dependendo da configuração do projeto.
-mvn spring-boot:run
-
-
-Certifique-se de estar na pasta raiz do projeto antes de executar este comando.
+```
+3. Rode a aplicação
+```java
+mvn spring-boot:run // O comando específico para iniciar o servidor pode variar dependendo da configuração do projeto.
+```
 
 4. **Acesse a plataforma por meio de um navegador da web:**
 
-Abra um navegador e navegue até o endereço local onde o servidor está sendo executado. Por padrão, se estiver usando Spring Boot, a aplicação pode ser acessada em `http://localhost:8080`.
+Abra um navegador e navegue até o endereço local onde o servidor está sendo executado `http://localhost:8080`.
 
-Certifique-se de seguir todas as instruções corretamente para garantir uma instalação e uso adequados do Oásis Marítimo.
+ ### ○ Variáveis de ambiente
+```java
+  DATABASE_HOST=
+  DATABASE_PORT=
+  DATABASE_NAME=
+  DATABASE_USERNAME=
+  DATABASE_PASSWORD=
+
+# Hospedar as imagens na AWS
+
+  AWS_ACCESS_KEY_ID=
+  AWS_ACCESS_KEY_SECRET=
+  AWS_REGION=
+  AWS_BUCKET_NAME= 
+```
 
 ## Contribuição
 
@@ -58,5 +63,3 @@ Contribuições são bem-vindas! Se você deseja melhorar o Oásis Marítimo, si
 Este projeto é licenciado sob a [Licença MIT](https://opensource.org/licenses/MIT) - veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ---
-
-Com o Oásis Marítimo, esperamos contribuir para a preservação dos ecossistemas marinhos e a conscientização sobre a importância da conservação marinha.
