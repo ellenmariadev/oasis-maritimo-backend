@@ -2,6 +2,17 @@
 
 O Sistema de Gerenciamento para Oceanário, também conhecido como Oásis Marítimo, é uma plataforma dedicada ao cuidado, conservação e pesquisa das espécies marinhas em oceanários. Desenvolvido com o objetivo de simplificar e otimizar as operações diárias em ambientes marinhos, o Oásis Marítimo oferece uma variedade de funcionalidades para profissionais envolvidos no cuidado e monitoramento dos animais.
 
+
+<kbd> Use **[Insomnia](https://github.com/ellenmariadev/oncar-backend/blob/main/data/insomnia.json)** para acessar as rotas.</kbd>
+
+![Static Badge](https://img.shields.io/badge/Java-52b0d4)
+![Static Badge](https://img.shields.io/badge/SpringBoot-52b0d4)
+![Static Badge](https://img.shields.io/badge/PostgreSQL-52b0d4)
+![Static Badge](https://img.shields.io/badge/Heroku-52b0d4)
+![Static Badge](https://img.shields.io/badge/H2%20Database-52b0d4)
+![Static Badge](https://img.shields.io/badge/AWS-52b0d4)
+![Static Badge](https://img.shields.io/badge/Spring%20Security%20JWT-52b0d4)
+
  ### 🌐 DEPLOY 
  
 https://oasis-maritimo-afe4c920a559.herokuapp.com/api/v1
